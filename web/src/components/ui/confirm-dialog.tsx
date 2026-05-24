@@ -25,6 +25,10 @@ import { Button, ButtonProps } from "@/components/ui/button";
  *   >
  *     <Button variant="destructive">Delete</Button>
  *   </ConfirmDialog>
+ *
+ * Personal note: changed default confirmVariant to "destructive" since most
+ * confirm dialogs in this app are for destructive actions (deletes, resets).
+ * Also defaulting cancelLabel to "No, go back" feels friendlier to me.
  */
 
 export interface ConfirmDialogProps {
@@ -34,7 +38,7 @@ export interface ConfirmDialogProps {
   description?: string;
   /** Label for the confirm button (default: "Confirm") */
   confirmLabel?: string;
-  /** Label for the cancel button (default: "Cancel") */
+  /** Label for the cancel button (default: "No, go back") */
   cancelLabel?: string;
   /** Variant forwarded to the confirm button */
   confirmVariant?: ButtonProps["variant"];
@@ -52,8 +56,8 @@ export function ConfirmDialog({
   title = "Are you sure?",
   description,
   confirmLabel = "Confirm",
-  cancelLabel = "Cancel",
-  confirmVariant = "default",
+  cancelLabel = "No, go back",
+  confirmVariant = "destructive",
   onConfirm,
   onCancel,
   children,
@@ -108,9 +112,8 @@ export function ConfirmDialog({
                 handleConfirm();
               }}
               disabled={isBusy}
-              aria-busy={isBusy}
             >
-              {isBusy ? "Please wait…" : confirmLabel}
+              {pending ? "Please wait..." : confirmLabel}
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
